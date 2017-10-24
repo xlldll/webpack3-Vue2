@@ -1,0 +1,63 @@
+// 导航栏图标动画
+//---------------------------------------
+.hover-1 {
+	transition: color .6s !important;
+}
+
+.hover-1:hover {
+	color: #f9934e !important;
+}
+
+// 图文动画
+//---------------------------------------
+.animation-style-1 > li {
+	opacity: 0;
+	animation-name: animationStyle1;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+	@for $i from 1 through 10 {
+		&:nth-child(#{$i}) {
+			animation-duration: 300ms * $i;
+		}
+	}
+}
+
+//=======================================
+//  keyframes
+//=======================================
+@keyframes animationStyle1 {
+	0% {
+		opacity: 0;
+		transform: rotateY(-90deg) translate3d(0, 30px, 0);
+	}
+	100% {
+		opacity: 1;
+		transform: rotate(0deg) translate3d(0, 0, 0);
+	}
+}
+
+//=======================================
+//  滚动条样式
+//=======================================
+::-webkit-scrollbar {
+	width: 15px;
+}
+
+::-webkit-scrollbar-track {
+	display: none;
+}
+
+::-webkit-scrollbar-track-piece {
+	background-color: #4a473c;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.2);
+	background: -moz-linear-gradient(45deg, rgba(50, 46, 31, 1), rgba(0, 0, 0, 0.2)); /*Mozilla*/
+	background: -o-linear-gradient(45deg,  rgba(50, 46, 31, 1), rgba(0, 0, 0, 0.2)); /*Opera11*/
+	background: -webkit-linear-gradient(45deg,  rgba(50, 46, 31, 1), rgba(0, 0, 0, 0.2)); /*new gradient for Webkit*/
+}
+
+::-webkit-scrollbar-button {
+	background-color: red;
+}

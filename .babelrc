@@ -1,0 +1,33 @@
+{
+	"env": {
+		"production": {
+			"presets": [
+				[
+					"env",
+					{
+						"loose": false,
+						"modules": false
+					}
+				],
+				"stage-3"
+			],
+			"plugins": [],
+			"comments": false
+		},
+		"development": {
+			"presets": [
+				[
+					"env",
+					{
+						"loose": false,
+						"modules": false
+					}
+				],
+				"stage-3"
+			],
+			"plugins": [
+				"transform-runtime"
+			]
+		}
+	}
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang = "zh-CN">
+<head>
+	<meta charset = "utf-8">
+	<meta name = "author" content = "datura" />
+	<meta name = "copyright" content = "版权" />
+	<meta name = "description" content = "描述" />
+	<meta name = "keywords" content = "关键字" />
+	<!--是否兼容Mobile-->
+	<% if (htmlWebpackPlugin.options.mobile) { %>
+	<meta name = "viewport" content = "width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+	<meta name = "apple-mobile-web-app-capable" content = "yes" />
+	<meta name = "apple-mobile-web-app-status-bar-style" content = "black" />
+	<meta name = "format-detection" content = "telephone=no" />
+	<meta name = "screen-orientation" content = "portrait"><!-- uc强制竖屏 -->
+	<meta name = "x5-orientation" content = "portrait"><!-- QQ强制竖屏 -->
+	<% } %>
+	<!--标题-->
+	<title><%= htmlWebpackPlugin.options.title || 'Webpack App' %></title>
+	<!--图标-->
+	<% if (htmlWebpackPlugin.files.favicon) { %>
+	<link rel = "shortcut icon" href = "<%= htmlWebpackPlugin.files.favicon %>">
+	<% } %>
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->	<!--[if lt IE 9]>
+	<script src = "https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src = "https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>	<![endif]-->
+</head>
+<body>
+<!--不支持的浏览器-->
+<% if (htmlWebpackPlugin.options.unsupportedBrowser) { %>
+<style>.unsupported-browser {
+		display: none;
+	}</style>
+<div class = "unsupported-browser">
+	Sorry, your browser is not supported. Please upgrade to the latest version or switch your browser to use this site. See
+	<a href = "http://outdatedbrowser.com/">outdatedbrowser.com</a>
+	for options.
+</div>
+<% } %>
+
+<% if (htmlWebpackPlugin.options.appMountId) { %>
+<div class = "<%= htmlWebpackPlugin.options.appMountId %>">
+	<% } %>
+	<!--全站导航栏-->
+	<div class = "row">
+		<nav class = "navbar navbar-default">
+			<nav-bar></nav-bar>
+		</nav>
+	</div>
+	<!--该页导航栏-->
+	<div class = "row">
+		<ul class = "nav nav-pills">
+			<li role = "presentation">
+				<router-link to = "/vuespa/about">ABOUT</router-link>
+			</li>
+			<li role = "presentation">
+				<router-link to = "/vuespa/todo">TODO</router-link>
+			</li>
+			<li role = "presentation">
+				<router-link to = "/vuespa/news">NEWS</router-link>
+			</li>
+			<li role = "presentation">
+				<router-link to = "/login">LOGIN</router-link>
+			</li>
+			<li role = "presentation">
+				<router-link to = "/vuespa/home">HOME</router-link>
+			</li>
+		</ul>
+	</div>
+	<div class = "row" style = "margin: 15px 0;">
+		<!--todo-vueRouter:此处的<router-view>是/login等一级路由的容器-->
+		<router-view></router-view>
+	</div>
+	<div class = "jumbotron">
+		<h1>Hello, world!</h1>
+		<div style = "margin: 15px 0;text-align: center;">
+			<img src = <%= require("./static/img/vuespa/bear.jpg") %> data-src= <%= require("./static/img/vuespa/沉舟.jpg") %> >
+		</div>
+		<p>
+			<button type = "button" class = "btn btn-default" data-toggle = "tooltip" data-placement = "right" title = "Bootstrap 提示框测试！">Tooltip on right</button>
+		</p>
+		<p>
+			<a class = "btn btn-primary btn-lg" href = "#" role = "button">Learn more</a>
+		</p>
+	</div>
+</div>
+<% if (htmlWebpackPlugin.options.window) { %>
+<script>
+	<% for (var varName in htmlWebpackPlugin.options.window) { %>
+    window['<%= varName %>'] = <%= JSON.stringify(htmlWebpackPlugin.options.window[varName]) %>
+	<% } %>
+</script>
+<% } %>
+</body>
+</html>
