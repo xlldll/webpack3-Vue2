@@ -7,8 +7,14 @@ const getters = [
 	'playing',
 	'prBufferedTime',
 	'prCurrentTime',
+	'currentTime',
 	'dragSong',
 	'dragSongTime',
+	
+	'currentIndex',
+	'durationTime',
+	
+	
 ];
 const mutations = [
 	'loading',
@@ -17,16 +23,23 @@ const mutations = [
 	
 	'play',
 	'pause',
+	'playprev',
 	'playnext',
 	'setCurrentTime',
 	'setDurationTime',
 	'setBufferedTime',
 	
-	'play',
-	'play',
+	'setAudioIndex',
+	
+	'setAudio',
+	'setLocation',
+	
+	'addToList',
 
 ];
 const actions = [
+	'audioUrl',
+	
 	'loading',
 ];
 

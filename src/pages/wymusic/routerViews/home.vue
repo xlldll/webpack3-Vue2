@@ -27,6 +27,7 @@
 </style>
 
 <script>
+	
 	import {mapGetters, mapActions, mapMutations} from 'vuex'
 	
 	import * as type from '../store/constant.js'

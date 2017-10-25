@@ -16,7 +16,7 @@
 			</div>
 			<div class = "control">
 				<mu-icon-button class = "mini-btn player-list" @click = "showList_m" />
-				<mu-icon-button class = "mini-btn player" @click = "toggPlay_m" :class = "{pause:!FLTplaying}" />
+				<mu-icon-button class = "mini-btn player" @click = "toggPlay_m" :class = "{pause:FLTplaying}" />
 				<mu-icon-button class = "mini-btn next" @click = "nextSong_m" />
 			</div>
 			<div class = "songProg">
@@ -227,18 +227,15 @@
 				type.FLT.playing,
 				type.FLT.prBufferedTime,
 				type.FLT.prCurrentTime,
+				type.FLT.currentTime,
+				type.FLT.durationTime,
 				type.FLT.dragSong,
 				type.FLT.dragSongTime,
 				type.FLT.songList,
 				type.FLT.showMiniAudio,
 			]),
-			audio_c: {
-				get: function() {
-					return this[type.FLT.audio];
-				},
-				set: function(newValue) {
-					this[type.FLT.audio] = newValue;
-				}
+			audio_c() {
+				return this[type.FLT.audio];
 			},
 		},
 		methods   : {
@@ -249,6 +246,7 @@
 				type.CHG.setCurrentTime,
 				type.CHG.setDurationTime,
 				type.CHG.setBufferedTime,
+				
 				type.CHG.loading,
 				type.CHG.showMiniAudio,
 				type.CHG.dragSong,
@@ -260,11 +258,13 @@
 				audio.onsuspend = function() {
 					let buffered = audio.buffered
 					let duration = audio.duration
+				 
 					if (buffered > 0 && duration > 0) {
 						vm[type.CHG.setBufferedTime](parseInt(buffered.end(0)))
 					}
 				}
-				this[type.CHG.setDurationTime](parseInt(audio.duration))
+				vm[type.CHG.setDurationTime](parseInt(audio.duration))
+			    console.log(`duration:`, audio.duration)
 				// 是否拖动了播放进度条
 				if (this[type.FLT.dragSong]) {
 					audio.currentTime = this[type.FLT.dragSongTime]
@@ -293,8 +293,8 @@
 			coverClk_m(){
 				this.$router.push({name: 'playerDetail', params: {id: this[type.FLT.audio].id}})
 				this[type.CHG.showMiniAudio]()
-				
 			},
+		 
 			showList_m(){
 				this.$refs.songLists.openBottomSheet_m()
 			},

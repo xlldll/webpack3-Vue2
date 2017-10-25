@@ -132,7 +132,6 @@ export default{
 			let args;
 			args = urls.map(url => axios({method: 'GET', url: api(address, url)}));
 			this.$store.dispatch(type.UPD.loading, true);
-			// console.log(`args:`, args)
 			// TODO-SERVER：axios处理多个并发的请求
 			return axios.all(args).then(
 					axios.spread((...res) => {

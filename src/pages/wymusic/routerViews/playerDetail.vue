@@ -347,7 +347,6 @@
 		watch     : {
 			FLTplaying(newval, oldval){
 				if (newval) {
-					
 					this.timer = this.rotateTimer_m();
 				} else {
 					clearInterval(this.timer)
@@ -359,8 +358,8 @@
 			...mapGetters([
 				type.FLT.audio,
 				type.FLT.currentTime,
-				type.FLT.durationTime,
 				type.FLT.prCurrentTime,
+				type.FLT.durationTime,
 				type.FLT.playing,
 			]),
 			lrcOffset_c(){
@@ -424,7 +423,6 @@
 			playNext_m(){
 				this[type.CHG.playnext]()
 				this.loadLrc_m(this[type.FLT.audio].id)
-				
 			},
 			showList_m(){
 				this.$refs.songLists.openBottomSheet_m()

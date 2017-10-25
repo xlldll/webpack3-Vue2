@@ -9,7 +9,7 @@
 				<router-view></router-view>
 			</keep-alive>
 		</transition>
-		<miniPlayer v-show="ifshowMini"></miniPlayer>
+		<miniPlayer v-show="ifshowMini_c"></miniPlayer>
 	</div>
 </template>
 <style lang = "scss">
@@ -104,12 +104,12 @@
 			...mapGetters([
 					type.FLT.songList,
 					type.FLT.showMiniAudio
-			])
-		},
-		methods   : {
-			ifshowMini(){
+			]),
+		  		ifshowMini_c(){
 				return this[type.FLT.songList].length > 0 && !this[type.FLT.showMiniAudio]
 			}
+		},
+		methods   : {
 		},
 		filters   : {}
 	}

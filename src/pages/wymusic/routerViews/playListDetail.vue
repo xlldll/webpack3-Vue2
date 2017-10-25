@@ -139,6 +139,7 @@
 				}
 			})
 		},
+	 
 		beforeRouteUpdate (to, from, next) {
 			next()
 		},
@@ -188,8 +189,8 @@
 				if (this[type.FLT.showMiniAudio]) {
 					this[type.CHG.showMiniAudio]()
 				}
-				
 			},
+		 
 			playAll_m(){
 				let items = []
 				// console.log(`thisdognlsit:`, this.songLists)
