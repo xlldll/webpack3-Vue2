@@ -1,6 +1,14 @@
-// todo：可以进一步优化整合
-const state = [
-	'config',
+
+const getters = [
+	'tracks'
+];
+
+const mutations = [
+	'init'
+];
+
+const actions = [
+	'init'
 ];
 
 function constObj(type, state) {
@@ -11,7 +19,8 @@ function constObj(type, state) {
 	// console.log(`constantJs:`, o)
 	return o;
 }
-export const FLT = constObj('FLT', state);
-export const CHG = constObj('CHG', state);
-export const UPD = constObj('UPD', state);
+
+export const FLT = constObj('FLT', getters);
+export const CHG = constObj('CHG', mutations);
+export const UPD = constObj('UPD', actions);
 

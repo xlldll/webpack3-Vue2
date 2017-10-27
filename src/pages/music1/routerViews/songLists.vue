@@ -4,6 +4,7 @@
 <template>
 	<div class = "songLists">
 		<ul class = "animation-style-1">
+			
 			<li class = "active">
 				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
 				<div class = "info">
@@ -12,6 +13,7 @@
 				</div>
 				<span>number</span>
 			</li>
+			
 			<li>
 				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
 				<div class = "info">
@@ -20,6 +22,7 @@
 				</div>
 				<span>number</span>
 			</li>
+			
 			<li>
 				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
 				<div class = "info">
@@ -28,6 +31,7 @@
 				</div>
 				<span>number</span>
 			</li>
+			
 			<li>
 				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
 				<div class = "info">
@@ -36,6 +40,7 @@
 				</div>
 				<span>number</span>
 			</li>
+			
 			<li>
 				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
 				<div class = "info">
@@ -53,6 +58,7 @@
 				<span>number</span>
 			</li>
 		</ul>
+		
 	</div>
 </template>
 
@@ -130,6 +136,7 @@
 		},
 		props     : [],
 		components: {},
+	 
 		beforeRouteEnter(to, from, next){
 			next()
 		},
@@ -139,6 +146,7 @@
 		beforeRouteLeave (to, from, next) {
 			next()
 		},
+	 
 		beforeCreate(){},
 		created(){},
 		beforeMount(){},

@@ -5,7 +5,7 @@
 	<div id = "page">
 		<Player></Player>
 		<div class = "right_content">
-			<Nav></Nav>
+			<Navc></Navc>
 			<transition name = "slide-fade">
 				<keep-alive>
 					<router-view></router-view>
@@ -14,6 +14,7 @@
 		</div>
 	</div>
 </template>
+
 
 <style lang = "scss">
 	/*rem 10 ÷ 16 × 100% = 62.5%*/
@@ -63,7 +64,7 @@
 	import * as util from './assist/utils'
 	
 	import Player from './components/player.vue'
-	import Nav from './components/nav.vue'
+	import Navc from './components/nav.vue'
 	
 	export default {
 		name      : 'app',
@@ -73,7 +74,7 @@
 		props     : [],
 		components: {
 			Player,
-			Nav
+			Navc
 		},
 		beforeRouteEnter(to, from, next){
 			next()
@@ -87,12 +88,16 @@
 		beforeCreate(){},
 		created(){},
 		beforeMount(){},
-		mounted(){},
+		mounted(){
+			this[type.UPD.init]()
+		},
 		beforeUpdate(){},
 		updated(){},
 		watch     : {},
 		computed  : {},
-		methods   : {},
+		methods   : {
+			...mapActions([type.UPD.init]),
+		},
 		filters   : {}
 	}
 

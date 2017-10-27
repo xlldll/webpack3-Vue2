@@ -1,3 +1,5 @@
 export default{
-	config: {},
+	// 歌单
+	tracks: [],
+	
 };

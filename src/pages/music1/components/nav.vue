@@ -4,27 +4,32 @@
 <template>
 	<nav>
 		<ul>
+			
 			<li>
 				<a href = "#" class = "hover-1">
 					<span class = "fa fa-user-circle"></span>
 					<span>Login</span>
 				</a>
 			</li>
+			
 			<li>
 				<router-link :to = "{name:'songLists'}" class = "hover-1">
 					<span class = "fa fa-list"></span>
 					<span>SongList</span>
 				</router-link>
 			</li>
+			
 			<li>
 				<router-link :to = "{name:'comments'}" class = "hover-1">
 					<span class = "fa fa-comments-o"></span>
 					<span>Comments</span>
 				</router-link>
 			</li>
+			
 			<li>
 				<input type = "search" placeholder = "search">
 			</li>
+			
 		</ul>
 	</nav>
 </template>
@@ -89,7 +94,7 @@
 	import * as type from '../store/constant.js'
 	import * as util from '../assist/utils'
 	export default {
-		name      : 'nav',
+		name      : 'Navc',
 		data () {
 			return {}
 		},

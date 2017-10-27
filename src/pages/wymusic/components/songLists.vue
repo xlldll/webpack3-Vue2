@@ -134,6 +134,7 @@
 		},
 		filters   : {}
 		
+		
 	}
 </script>
 
