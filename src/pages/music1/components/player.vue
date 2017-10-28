@@ -9,9 +9,9 @@
 			<p>{{ FLTcurrentTrackInfo.artists | comboName }}</p>
 		</div>
 		<div class = "cover">
-			<div class = "wrapper">
+			<div class = "wrapper" :style="{ transform:'rotate('+ rotateDeg+'deg)'}">
 				<div class = "cd"></div>
-				<img :src = "FLTcurrentTrackInfo.picurl" alt = "#">
+				<img :src = "FLTcurrentTrackInfo.picurl" :alt = "FLTcurrentTrackInfo.name">
 			</div>
 		</div>
 		
@@ -36,7 +36,7 @@
 		<div class = "progress">
 			<span>{{ FLTcurrentPos | time}}</span>
 			<div class = "slider">
-				<input type = "range" :max = "FLTdurationTime" v-model = "elapsed_c" @change = "dragAudio_m">
+				<input type = "range" :max = "FLTdurationTime" v-model = "elapsed_c">
 			</div>
 			<span>{{ FLTdurationTime | time}}</span>
 		</div>
@@ -58,7 +58,7 @@
 			</li>
 		</ul>
 		
-		<div class = "stick"></div>
+		<div class = "stick" :class="{ playing:!FLTplaying}"></div>
 		<div class = "mask">
 			<div class = "cover-mask"></div>
 			<div class = "album-cover" :style = "{'background-image':'url('+FLTcurrentTrackInfo.picurl+')'}"></div>
@@ -454,7 +454,9 @@
 	export default {
 		name      : 'player',
 		data () {
-			return {}
+			return {
+				rotateDeg:0
+			}
 		},
 		props     : [],
 		components: {},
@@ -470,14 +472,29 @@
 		beforeCreate(){},
 		created(){},
 		beforeMount(){},
-		mounted(){},
+		mounted(){
+			if (this[type.FLT.playing]) {
+				// 封面圆形加载进度条
+				this.timer = this.rotateTimer_m()
+			}
+		},
 		beforeUpdate(){},
 		updated(){},
 		activated(){},
 		deactivated(){},
-		beforeDestroy(){},
+		beforeDestroy(){
+			clearInterval(this.timer)
+		},
 		destroyed(){},
-		watch     : {},
+		watch     : {
+			FLTplaying(nval,oval){
+				if(nval){
+					this.timer = this.rotateTimer_m();
+				}else{
+					clearInterval(this.timer)
+				}
+			}
+		},
 		computed  : {
 			...mapGetters([
 				type.FLT.currentTrackInfo,
@@ -570,11 +587,14 @@
 			playNext_m(){
 			
 			},
-			dragAudio_m(event){
-		  /*let time = event.target.value
-		   console.log(`time:`, time)
-		   this[type.CHG.dragAudio](true)
-		   this[type.CHG.dragTime](time)*/
+			// 旋转计时器
+			rotateTimer_m(){
+				return setInterval(() => {
+					this.rotateDeg += 1
+					if (this.rotateDeg > 360) {
+						this.rotateDeg = 0
+					}
+				}, 50)
 			}
 		},
 		filters   : {

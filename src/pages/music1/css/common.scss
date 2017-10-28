@@ -61,7 +61,7 @@
 .animation-style-5 {
 	opacity: 0;
 	animation-name: animationStyle5;
-	animation-duration: 2000ms;
+	animation-duration: 3000ms;
 	animation-timing-function: ease-in-out;
 	animation-iteration-count:infinite;
 	animation-direction:alternate;
@@ -110,7 +110,7 @@
 	}
 	50% {
 		opacity: 1;
-		transform: rotate(0deg);
+		transform: rotate(0deg) scale(1.5,1.5);
 	}
 	100% {
 		opacity: 0;
