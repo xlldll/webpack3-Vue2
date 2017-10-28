@@ -39,12 +39,14 @@
 	export default {
 		name      : 'SongLists',
 		data () {
+			
 			return {
 				scroller   : null,
 				isloading  : false,
 				topPlayList: [],
 				offset     : 0
 			}
+			
 		},
 		props     : [],
 		components: {},
@@ -59,7 +61,9 @@
 		},
 		beforeCreate(){},
 		created(){
+			
 			this.getSongLists_m();
+			
 		},
 		beforeMount(){},
 		mounted(){
@@ -74,6 +78,7 @@
 		watch     : {},
 		computed  : {},
 		methods   : {
+			
 			getSongLists_m(){
 				this.isloading = true;
 				this.$load(`http://musicapi.duapp.com/api.php`, `?type=topPlayList&cat=全部&offset=${this.offset}&limit=12`).then((res) => {
@@ -88,9 +93,11 @@
 					this.isloading = false;
 				})
 			},
+			
 			loadMore () {
 				this.getSongLists_m()
 			}
+			
 		},
 		filters   : {}
 	}

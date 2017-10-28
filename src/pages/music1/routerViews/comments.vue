@@ -3,7 +3,7 @@
 */
 <template>
 	<div class = "comments">
-		<ul class = "animation-style-1">
+		<ul class = "animation-style-4">
 			<li>
 				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
 				<div class = "info">

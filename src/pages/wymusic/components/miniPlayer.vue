@@ -6,14 +6,17 @@
 	<div class = "foot">
 		<div class = "player-mini">
 			<audio id = "audioPlay" :src = "audio_c.location" @timeupdate = "timeUpd_m" @canplay = "canPlay_m" @error = "audioErr_m" @ended = "ended_m" />
+			
 			<div class = "cover" @click = "coverClk_m">
 				<mu-circular-progress v-show = "FLTloading" mode = "determinate" :size = "40" :value = "progval" />
 				<img v-show = "!FLTloading" :src = "audio_c.albumPic + '?param=40y40'" :alt = "audio_c.name">
 			</div>
+			
 			<div class = "info">
 				<div class = "name xmpname">{{ FLTaudio.name }}</div>
 				<div class = "artist xmpartist">{{ FLTaudio.singer }}</div>
 			</div>
+			
 			<div class = "control">
 				<mu-icon-button class = "mini-btn player-list" @click = "showList_m" />
 				<mu-icon-button class = "mini-btn player" @click = "toggPlay_m" :class = "{pause:FLTplaying}" />
@@ -255,6 +258,7 @@
 				let vm = this
 				let audio = document.getElementById('audioPlay')
 				let currentTime = parseInt(audio.currentTime)
+			 
 				audio.onsuspend = function() {
 					let buffered = audio.buffered
 					let duration = audio.duration
@@ -263,6 +267,7 @@
 						vm[type.CHG.setBufferedTime](parseInt(buffered.end(0)))
 					}
 				}
+				
 				vm[type.CHG.setDurationTime](parseInt(audio.duration))
 			    console.log(`duration:`, audio.duration)
 				// 是否拖动了播放进度条

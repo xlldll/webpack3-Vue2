@@ -1,5 +1,6 @@
 import * as type from './constant';
 import Axios from 'axios'
+
 export default{
 	[type.UPD.audioUrl]({commit, state}, data){
 		commit(type.CHG.loading, true);

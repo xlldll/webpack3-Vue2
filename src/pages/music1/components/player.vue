@@ -5,13 +5,13 @@
 	<div class = "left_content">
 		
 		<div class = "title">
-			<h1>name</h1>
-			<p>singer</p>
+			<h1>{{ FLTcurrentTrackInfo.name }}</h1>
+			<p>{{ FLTcurrentTrackInfo.artists | comboName }}</p>
 		</div>
 		<div class = "cover">
 			<div class = "wrapper">
 				<div class = "cd"></div>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
+				<img :src = "FLTcurrentTrackInfo.picurl" alt = "#">
 			</div>
 		</div>
 		
@@ -27,31 +27,31 @@
 				<span class = "fa fa-volume-up fa-2x"></span>
 			</div>
 			<div class = "slider">
-				<input type = "range" max = "100">
+				<input type = "range" max = "1" v-model="volume_c" step="0.01">
 			</div>
 			<div class = "download">
 				<a href = "#" class = "fa fa-download fa-2x"></a>
 			</div>
 		</div>
 		<div class = "progress">
-			<span>0:00</span>
+			<span>{{ FLTcurrentPos | time}}</span>
 			<div class = "slider">
-				<input type = "range" max = "100">
+				<input type = "range" :max = "FLTdurationTime" v-model = "elapsed_c" @change = "dragAudio_m">
 			</div>
-			<span>4:20</span>
+			<span>{{ FLTdurationTime | time}}</span>
 		</div>
 		<ul class = "control">
 			<li>
 				<span class = "fa fa-retweet fa-2x"></span>
 			</li>
 			<li>
-				<span class = "fa fa-backward fa-4x"></span>
+				<span class = "fa fa-backward fa-4x" @click = "playPrev_m"></span>
 			</li>
 			<li>
-				<span class = "fa fa-play-circle fa-5x"></span>
+				<span class = "fa fa-play-circle fa-5x" @click = "togglePlay_m" :class = "{'fa-pause-circle':FLTplaying}"></span>
 			</li>
 			<li>
-				<span class = "fa fa-forward fa-4x"></span>
+				<span class = "fa fa-forward fa-4x" @click = "playNext_m"></span>
 			</li>
 			<li>
 				<span class = "fa fa-random fa-2x"></span>
@@ -61,9 +61,10 @@
 		<div class = "stick"></div>
 		<div class = "mask">
 			<div class = "cover-mask"></div>
-			<div class = "album-cover" :style = "{'background-image':'url(http://localhost:3334/static/cloudmusic/default_cover.png)'}"></div>
+			<div class = "album-cover" :style = "{'background-image':'url('+FLTcurrentTrackInfo.picurl+')'}"></div>
 		</div>
-	
+		<!--音频标签-->
+		<audio id = "audioPlay" :src = "audioSrc_c" @timeupdate = "timeUpd_m" @canplay = "canPlay_m" @error = "audioErr_m" @ended = "ended_m" />
 	</div>
 </template>
 <style scoped = "true" lang = "scss">
@@ -477,9 +478,128 @@
 		beforeDestroy(){},
 		destroyed(){},
 		watch     : {},
-		computed  : {},
-		methods   : {},
-		filters   : {}
+		computed  : {
+			...mapGetters([
+				type.FLT.currentTrackInfo,
+				type.FLT.audioSrc,
+				type.FLT.playing,
+				type.FLT.bufferedTime,
+				type.FLT.currentPos,
+				type.FLT.currentTime,
+				type.FLT.durationTime,
+				type.FLT.volume
+			]),
+			audioSrc_c(){
+				return this[type.FLT.audioSrc];
+			},
+			elapsed_c: {
+				get: function() {
+					return this[type.FLT.currentPos];
+				},
+				set: function(val) {
+					// todo:直接通过这种方式实现拖动进度条，之前的太复杂
+					this[type.CHG.currentPos](val)
+				    let audio = document.querySelector('#audioPlay');
+				    audio.currentTime = val;
+				}
+			},
+		    volume_c:{
+				get:function() {
+					return this[type.FLT.volume];
+				},
+		        set:function(val){
+					this[type.CHG.volume](val)
+		            let audio = document.querySelector('#audioPlay');
+					 audio.volume = val;
+		        }
+		    }
+			
+		},
+		methods   : {
+			...mapMutations([
+				type.CHG.playing,
+				type.CHG.bufferedTime,
+				type.CHG.currentPos,
+				type.CHG.durationTime,
+				type.CHG.volume,
+			]),
+			// HTML5 Audio/Video 事件
+			// 当浏览器可以播放音频/视频时
+			// http://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp
+			canPlay_m(){
+				this[type.CHG.playing](true)
+				document.getElementById('audioPlay').play()
+			},
+			
+			// 当目前的播放位置已更改时
+			timeUpd_m(){
+				let vm = this;
+				let audio = document.querySelector('#audioPlay');
+				let currentTime = parseInt(audio.currentTime);
+				// 以秒计算，播放时间
+				// console.log(`currentTime:`, currentTime)
+				
+				// 当浏览器刻意不获取媒体数据时
+				audio.onsuspend = function() {
+					let buffered = audio.buffered
+					let duration = audio.duration
+					if (buffered > 0 && duration > 0) {
+						vm[type.CHG.bufferedTime](parseInt(buffered.end(0)))
+					}
+				}
+				// 返回当前音频/视频的长度（以秒计）audio.duration
+				this[type.CHG.durationTime](parseInt(audio.duration));
+				this[type.CHG.currentPos](currentTime)
+			},
+			// 当在音频/视频加载期间发生错误时
+			audioErr_m(){},
+			// 当目前的播放列表已结束时
+			ended_m(){},
+			
+			playPrev_m(){},
+			// 用户点击播放暂停时
+			togglePlay_m(){
+				if (this[type.FLT.playing]) {
+					document.querySelector('#audioPlay').pause()
+					this[type.CHG.playing](false)
+				} else {
+					document.querySelector('#audioPlay').play()
+					this[type.CHG.playing](true)
+				}
+			},
+			playNext_m(){
+			
+			},
+			dragAudio_m(event){
+		  /*let time = event.target.value
+		   console.log(`time:`, time)
+		   this[type.CHG.dragAudio](true)
+		   this[type.CHG.dragTime](time)*/
+			}
+		},
+		filters   : {
+			comboName: function(val) {
+				if (!val) return ''
+				let str = "";
+				val.forEach((v, i) => {
+					str += v.name + " / "
+				})
+				return str.slice(0, str.length - 3);
+			},
+			// 时间字符格式化
+			time     : function(value) {
+				var length = Math.floor(parseInt(value))
+				var minute = Math.floor(value / 60)
+				if (minute < 10) {
+					minute = '0' + minute
+				}
+				var second = length % 60
+				if (second < 10) {
+					second = '0' + second
+				}
+				return minute + ':' + second
+			}
+		}
 	}
 </script>
 

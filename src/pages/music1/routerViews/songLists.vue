@@ -5,60 +5,17 @@
 	<div class = "songLists">
 		<ul class = "animation-style-1">
 			
-			<li class = "active">
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
+			<li v-for = "(track,index) in FLTtracks" :key = "index" @click="playthis_m(index)" :class="{active:FLTcurrentTrack === index}">
+				<img :src = "track.picurl" alt = "track.albumttl">
 				<div class = "info">
-					<h3>title</h3>
-					<p>subtitle</p>
+					<h3>{{ track.name }}</h3>
+					<p>{{ track.artists | comboName }}</p>
 				</div>
-				<span>number</span>
+				<span>{{ track.pop }}</span>
 			</li>
 			
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
-				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
-				</div>
-				<span>number</span>
-			</li>
-			
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
-				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
-				</div>
-				<span>number</span>
-			</li>
-			
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
-				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
-				</div>
-				<span>number</span>
-			</li>
-			
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
-				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
-				</div>
-				<span>number</span>
-			</li>
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
-				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
-				</div>
-				<span>number</span>
-			</li>
 		</ul>
-		
+	
 	</div>
 </template>
 
@@ -136,7 +93,7 @@
 		},
 		props     : [],
 		components: {},
-	 
+		
 		beforeRouteEnter(to, from, next){
 			next()
 		},
@@ -146,17 +103,42 @@
 		beforeRouteLeave (to, from, next) {
 			next()
 		},
-	 
+		
 		beforeCreate(){},
-		created(){},
+		created(){
+		
+		},
 		beforeMount(){},
 		mounted(){},
 		beforeUpdate(){},
 		updated(){},
-		watch     : {},
-		computed  : {},
-		methods   : {},
-		filters   : {}
+		watch: {},
+		
+		computed: {
+			...mapGetters([
+				type.FLT.tracks,
+				type.FLT.currentTrack,
+			])
+		},
+		
+		methods: {
+			...mapActions([type.UPD.selectTrack]),
+			playthis_m(index){
+				this[type.UPD.selectTrack]({
+					newtrack: index
+				})
+			}
+		},
+		filters: {
+			comboName: function(val) {
+				if (!val) return ''
+				let str = "";
+				val.forEach((v,i)=>{
+					str += v.name + " / "
+				})
+				return str.slice(0,str.length-3);
+			}
+		}
 	}
 </script>
 

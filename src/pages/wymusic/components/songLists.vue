@@ -128,6 +128,7 @@
 				this[type.CHG.setAudioIndex](index);
 				this[type.UPD.audioUrl](this[type.FLT.audio].id);
 			},
+		 
 			remove_m(index){
 				this[type.CHG.unsetAudioIndex](index);
 			},

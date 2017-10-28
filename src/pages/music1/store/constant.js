@@ -1,14 +1,33 @@
-
 const getters = [
-	'tracks'
+	'tracks',
+	'currentTrack',
+	'currentTrackInfo',
+	'audioSrc',
+	'playing',
+	'bufferedTime',
+	'currentTime',
+	'currentPos',
+	'durationTime',
+	'volume',
+	
 ];
 
 const mutations = [
-	'init'
+	'init',
+	'selectTrack',
+	'initPlayer',
+	'audioSrc',
+	'playing',
+	'bufferedTime',
+	'currentPos',
+	'durationTime',
+	'volume',
 ];
 
 const actions = [
-	'init'
+	'init',
+	'selectTrack',
+	'audioSrc',
 ];
 
 function constObj(type, state) {

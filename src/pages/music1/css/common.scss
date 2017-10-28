@@ -21,7 +21,38 @@
 		}
 	}
 }
-
+//---------------------------------------
+.animation-style-2 > li {
+    opacity: 0;
+    animation-name: animationStyle2;
+    transform-origin:top center;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+            animation-duration: 300ms * $i;
+            animation-delay: (150ms * $i) - 300;
+        }
+    }
+}
+//---------------------------------------
+.animation-style-3 {
+    animation: fadeIn 400ms
+}
+//---------------------------------------
+.animation-style-4  >li {
+    opacity: 0;
+    animation-name: animationStyle4;
+    animation-duration: 300ms;
+    transform-origin: top right;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    @for $i from 1 through 10 {
+        &:nth-child(#{$i}){
+            animation-delay: (150ms * $i) - 300;
+        }
+    }
+}
 //=======================================
 //  keyframes
 //=======================================
@@ -36,6 +67,49 @@
 	}
 }
 
+@keyframes animationStyle2 {
+    0% {
+        opacity: 0;
+        transform: rotateX(-90deg);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes animationStyle4 {
+    0%{
+        opacity:0;
+        transform: rotate(-30deg);
+    }
+    100%{
+        opacity:1;
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: rotateX(-90deg) rotateY(-90deg) translate3d(-50%, 50px, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg) rotateY(0deg) translate3d(-50%, -50%, 0);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: rotateX(0deg) rotateY(0deg) translate3d(-50%, -50%, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: rotateX(-90deg) rotateY(90deg) translate3d(-50%, 50px, 0);
+    }
+}
 //=======================================
 //  滚动条样式
 //=======================================
