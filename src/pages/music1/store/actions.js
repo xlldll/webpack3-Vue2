@@ -40,5 +40,18 @@ export default{
 				commit(type.CHG.audioSrc,data.data.data[0].url)
 			})
 		
+	},
+	/**
+	 * 查找评论
+	 * @param state
+	 * @param commit
+	 * @param dispatch
+	 */
+	[type.UPD.searchComments]({state,commit,dispatch}){
+		let id=state.currentTrackInfo.id;
+		API.searchComments(id).then((data)=>{
+			commit(type.CHG.hotComments,data.data.hotComments);
+			commit(type.CHG.comments,data.data.comments);
+		})
 	}
 };

@@ -9,7 +9,8 @@ const getters = [
 	'currentPos',
 	'durationTime',
 	'volume',
-	
+	'hotComments',
+	'comments',
 ];
 
 const mutations = [
@@ -22,12 +23,16 @@ const mutations = [
 	'currentPos',
 	'durationTime',
 	'volume',
+	'hotComments',
+	'comments',
+	
 ];
 
 const actions = [
 	'init',
 	'selectTrack',
 	'audioSrc',
+	'searchComments'
 ];
 
 function constObj(type, state) {

@@ -21,38 +21,52 @@
 		}
 	}
 }
+
 //---------------------------------------
 .animation-style-2 > li {
-    opacity: 0;
-    animation-name: animationStyle2;
-    transform-origin:top center;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: forwards;
-    @for $i from 1 through 10 {
-        &:nth-child(#{$i}) {
-            animation-duration: 300ms * $i;
-            animation-delay: (150ms * $i) - 300;
-        }
-    }
+	opacity: 0;
+	animation-name: animationStyle2;
+	transform-origin: top center;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+	@for $i from 1 through 10 {
+		&:nth-child(#{$i}) {
+			animation-duration: 300ms * $i;
+			animation-delay: (150ms * $i) - 300;
+		}
+	}
 }
+
 //---------------------------------------
 .animation-style-3 {
-    animation: fadeIn 400ms
+	animation: fadeIn 400ms
 }
+
 //---------------------------------------
-.animation-style-4  >li {
-    opacity: 0;
-    animation-name: animationStyle4;
-    animation-duration: 300ms;
-    transform-origin: top right;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: forwards;
-    @for $i from 1 through 10 {
-        &:nth-child(#{$i}){
-            animation-delay: (150ms * $i) - 300;
-        }
-    }
+.animation-style-4 > li {
+	opacity: 0;
+	animation-name: animationStyle4;
+	animation-duration: 300ms;
+	transform-origin: top right;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+	@for $i from 1 through 10 {
+		&:nth-child(#{$i}) {
+			animation-delay: (150ms * $i) - 300;
+		}
+	}
 }
+
+//---------------------------------------
+.animation-style-5 {
+	opacity: 0;
+	animation-name: animationStyle5;
+	animation-duration: 2000ms;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count:infinite;
+	animation-direction:alternate;
+}
+
 //=======================================
 //  keyframes
 //=======================================
@@ -68,48 +82,64 @@
 }
 
 @keyframes animationStyle2 {
-    0% {
-        opacity: 0;
-        transform: rotateX(-90deg);
-    }
-    100% {
-        opacity: 1;
-        transform: rotate(0deg);
-    }
+	0% {
+		opacity: 0;
+		transform: rotateX(-90deg);
+	}
+	100% {
+		opacity: 1;
+		transform: rotate(0deg);
+	}
 }
 
 @keyframes animationStyle4 {
-    0%{
-        opacity:0;
-        transform: rotate(-30deg);
-    }
-    100%{
-        opacity:1;
-        transform: rotate(0deg);
-    }
+	0% {
+		opacity: 0;
+		transform: rotate(-30deg);
+	}
+	100% {
+		opacity: 1;
+		transform: rotate(0deg);
+	}
+}
+
+@keyframes animationStyle5 {
+	0% {
+		opacity: 0;
+		transform: rotate(-30deg);
+	}
+	50% {
+		opacity: 1;
+		transform: rotate(0deg);
+	}
+	100% {
+		opacity: 0;
+		transform: rotate(30deg);
+	}
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: rotateX(-90deg) rotateY(-90deg) translate3d(-50%, 50px, 0);
-    }
-    100% {
-        opacity: 1;
-        transform: rotateX(0deg) rotateY(0deg) translate3d(-50%, -50%, 0);
-    }
+	0% {
+		opacity: 0;
+		transform: rotateX(-90deg) rotateY(-90deg) translate3d(-50%, 50px, 0);
+	}
+	100% {
+		opacity: 1;
+		transform: rotateX(0deg) rotateY(0deg) translate3d(-50%, -50%, 0);
+	}
 }
 
 @keyframes fadeOut {
-    0% {
-        opacity: 1;
-        transform: rotateX(0deg) rotateY(0deg) translate3d(-50%, -50%, 0);
-    }
-    100% {
-        opacity: 0;
-        transform: rotateX(-90deg) rotateY(90deg) translate3d(-50%, 50px, 0);
-    }
+	0% {
+		opacity: 1;
+		transform: rotateX(0deg) rotateY(0deg) translate3d(-50%, -50%, 0);
+	}
+	100% {
+		opacity: 0;
+		transform: rotateX(-90deg) rotateY(90deg) translate3d(-50%, 50px, 0);
+	}
 }
+
 //=======================================
 //  滚动条样式
 //=======================================
@@ -128,8 +158,8 @@
 ::-webkit-scrollbar-thumb {
 	background-color: rgba(0, 0, 0, 0.2);
 	background: -moz-linear-gradient(45deg, rgba(50, 46, 31, 1), rgba(0, 0, 0, 0.2)); /*Mozilla*/
-	background: -o-linear-gradient(45deg,  rgba(50, 46, 31, 1), rgba(0, 0, 0, 0.2)); /*Opera11*/
-	background: -webkit-linear-gradient(45deg,  rgba(50, 46, 31, 1), rgba(0, 0, 0, 0.2)); /*new gradient for Webkit*/
+	background: -o-linear-gradient(45deg, rgba(50, 46, 31, 1), rgba(0, 0, 0, 0.2)); /*Opera11*/
+	background: -webkit-linear-gradient(45deg, rgba(50, 46, 31, 1), rgba(0, 0, 0, 0.2)); /*new gradient for Webkit*/
 }
 
 ::-webkit-scrollbar-button {

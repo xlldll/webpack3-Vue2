@@ -17,7 +17,6 @@
 					<span slot = "title">{{item.name}}</span>
 					<span slot = "subTitle">by <b>{{item.creator.nickname}}</b></span>
 				</mu-grid-tile>
-			
 			</mu-grid-list>
 		</mu-card>
 		<mu-infinite-scroll :scroller = "scroller" :loading = "isloading" @load = "loadMore" />

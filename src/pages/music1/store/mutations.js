@@ -90,7 +90,45 @@ export default{
 	 * @param state
 	 * @param data
 	 */
-	[type.CHG.volume](state, data){
+			[type.CHG.volume](state, data){
 		state.volume = data;
 	},
+	[type.CHG.hotComments](state, data){
+		// console.log(`data:`, data);
+		// console.log(`user:`, data[0].user);
+		state.hotComments = [];
+		data.forEach((item, index) => {
+			// console.log(`item:`, item.user.nickname);
+			let obj = {};
+			({
+				user      : {
+					nickname : obj.nickname,
+					avatarUrl: obj.avatarUrl
+				},
+				likedCount: obj.likedCount,
+				time      : obj.time,
+				content   : obj.content
+			} = item);
+			obj.beReplied = data.beReplied;
+			state.hotComments.push(obj);
+		});
+		
+	},
+	[type.CHG.comments](state, data){
+		state.comments = [];
+		data.forEach((item, index) => {
+			let obj = {};
+			({
+				user      : {
+					nickname : obj.nickname,
+					avatarUrl: obj.avatarUrl
+				},
+				likedCount: obj.likedCount,
+				time      : obj.time,
+				content   : obj.content
+			} = item);
+			obj.beReplied = data.beReplied;
+			state.comments.push(obj);
+		});
+	}
 };

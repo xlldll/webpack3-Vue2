@@ -74,5 +74,21 @@ export default{
 	 */
 	[type.FLT.volume](state){
 		return state.volume;
-	}
+	},
+	/**
+	 * 热门评论
+	 * @param state
+	 * @returns {Array|*}
+	 */
+	[type.FLT.hotComments](state){
+		return state.hotComments;
+	},
+	/**
+	 * 普通评论
+	 * @param state
+	 */
+	[type.FLT.comments](state){
+		return state.comments;
+	},
+
 };

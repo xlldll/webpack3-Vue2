@@ -122,11 +122,12 @@
 		},
 		
 		methods: {
-			...mapActions([type.UPD.selectTrack]),
+			...mapActions([type.UPD.selectTrack,type.UPD.searchComments]),
 			playthis_m(index){
 				this[type.UPD.selectTrack]({
 					newtrack: index
 				})
+				this[type.UPD.searchComments]()
 			}
 		},
 		filters: {

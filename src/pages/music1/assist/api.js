@@ -21,5 +21,12 @@ export default {
 				id:id
 			}
 		});
+	},
+	searchComments:(id)=>{
+		return request.get(ADDR.searchComments,{
+			params:{
+				id:id
+			}
+		});
 	}
 }

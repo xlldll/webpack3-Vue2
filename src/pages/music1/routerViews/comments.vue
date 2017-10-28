@@ -4,53 +4,24 @@
 <template>
 	<div class = "comments">
 		<ul class = "animation-style-4">
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
+			
+			<li v-for = "( hotcomment,index ) in FLThotComments" :key = "'hot' + index">
+				<img :src = "hotcomment.avatarUrl" :alt = "hotcomment.nickname">
 				<div class = "info">
-					<h3>title</h3>
-					<p>subtitle</p>
+					<h3>{{ hotcomment.nickname }}</h3>
+					<p>{{ hotcomment.content }}</p>
+					<p>{{ hotcomment.time | date}}</p>
 				</div>
-				<span>number</span>
+				<p><span class="fa fa-heart animation-style-5"></span> {{ hotcomment.likedCount }}</p>
 			</li>
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
+			
+			<li v-for = "( comment,index ) in FLTcomments" :key = "'comment' + index">
+				<img :src = "comment.avatarUrl" :alt = "comment.nickname">
 				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
+					<h3>{{ comment.nickname }}</h3>
+					<p>{{ comment.content }}</p>
+					<p>{{ comment.time | date}}</p>
 				</div>
-				<span>number</span>
-			</li>
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
-				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
-				</div>
-				<span>number</span>
-			</li>
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
-				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
-				</div>
-				<span>number</span>
-			</li>
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
-				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
-				</div>
-				<span>number</span>
-			</li>
-			<li>
-				<img src = "http://localhost:3334/static/cloudmusic/default_cover.png" alt = "#">
-				<div class = "info">
-					<h3>titletitletitle</h3>
-					<p>subtitlesubtitlesubtitle</p>
-				</div>
-				<span>number</span>
 			</li>
 		</ul>
 	</div>
@@ -75,7 +46,7 @@
 				align-items: center;
 				
 				margin: 0;
-				padding: 2.5% 0;
+				padding: 0.5% 0;
 				border-bottom: 1px solid #3f3d34;
 				
 				color: white;
@@ -93,12 +64,16 @@
 				}
 				.info {
 					order: 0;
-					flex-flow: 0;
+					flex-grow: 0;
 					flex-shrink: 0;
-					flex-basis: 68%;
+					flex-basis: 70%;
 					align-self: auto;
+					
+					margin-right: 3%;
 				}
-				
+				.fa-heart{
+					color: darkred;
+				}
 				span {
 					align-self: center;
 				}
@@ -128,7 +103,10 @@
 		},
 		beforeCreate(){},
 		created(){},
-		beforeMount(){},
+		beforeMount(){
+			console.log(`FLThotComments:`, this[type.FLT.hotComments])
+			console.log(`FLThotComments:`, this[type.FLT.comments])
+		},
 		mounted(){},
 		beforeUpdate(){},
 		updated(){},
@@ -137,9 +115,25 @@
 		beforeDestroy(){},
 		destroyed(){},
 		watch     : {},
-		computed  : {},
+		computed  : {
+			...mapGetters([
+				type.FLT.hotComments,
+				type.FLT.comments,
+			])
+		},
 		methods   : {},
-		filters   : {}
+		filters   : {
+			date: function(val) {
+				let date = new Date(val);
+				let year = date.getFullYear() + '-';
+				let month = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+				let day = (date.getDay()<10 ? '0'+date.getDay() :date.getDay()) + ' ';
+				let hour = date.getHours() + ':';
+				let minutes = date.getMinutes() + ':';
+				let second = date.getSeconds();
+				return year + month + day + hour + minutes + second;
+			}
+		}
 	}
 </script>
 
