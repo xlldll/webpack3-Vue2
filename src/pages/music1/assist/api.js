@@ -28,5 +28,12 @@ export default {
 				id:id
 			}
 		});
+	},
+	searchLrc:(id)=>{
+		return request.get(ADDR.searchLrc,{
+			params:{
+				id:id
+			}
+		});
 	}
 }

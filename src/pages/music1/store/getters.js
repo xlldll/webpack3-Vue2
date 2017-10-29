@@ -90,5 +90,10 @@ export default{
 	[type.FLT.comments](state){
 		return state.comments;
 	},
-
+	[type.FLT.nolyric](state){
+		return state.nolyric;
+	},
+		[type.FLT.lrc](state){
+		return state.lrc;
+	},
 };

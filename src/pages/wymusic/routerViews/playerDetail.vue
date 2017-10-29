@@ -147,7 +147,6 @@
 				right: 10px;
 				overflow: hidden;
 				p {
-					
 					height: 42px;
 					overflow: hidden;
 					text-overflow: ellipsis;
@@ -363,6 +362,7 @@
 				type.FLT.playing,
 			]),
 			lrcOffset_c(){
+				
 				if (this.afterLrc) {
 					// 1、根据时间获得歌词
 					var current = Math.round(this[type.FLT.currentTime])

@@ -103,11 +103,11 @@ export default{
 			({
 				user      : {
 					nickname : obj.nickname,
-					avatarUrl: obj.avatarUrl
+					avatarUrl: obj.avatarUrl,
 				},
 				likedCount: obj.likedCount,
 				time      : obj.time,
-				content   : obj.content
+				content   : obj.content,
 			} = item);
 			obj.beReplied = data.beReplied;
 			state.hotComments.push(obj);
@@ -121,14 +121,21 @@ export default{
 			({
 				user      : {
 					nickname : obj.nickname,
-					avatarUrl: obj.avatarUrl
+					avatarUrl: obj.avatarUrl,
 				},
 				likedCount: obj.likedCount,
 				time      : obj.time,
-				content   : obj.content
+				content   : obj.content,
 			} = item);
 			obj.beReplied = data.beReplied;
 			state.comments.push(obj);
 		});
-	}
+	},
+	[type.CHG.nolyric](state, data){
+		state.nolyric = data;
+	},
+	[type.CHG.lrc](state, data){
+		state.lrc = data;
+	},
+	
 };

@@ -11,6 +11,8 @@ const getters = [
 	'volume',
 	'hotComments',
 	'comments',
+			'nolyric',
+	'lrc',
 ];
 
 const mutations = [
@@ -25,6 +27,8 @@ const mutations = [
 	'volume',
 	'hotComments',
 	'comments',
+	'nolyric',
+	'lrc',
 	
 ];
 
@@ -32,7 +36,8 @@ const actions = [
 	'init',
 	'selectTrack',
 	'audioSrc',
-	'searchComments'
+	'searchComments',
+	'searchLrc',
 ];
 
 function constObj(type, state) {

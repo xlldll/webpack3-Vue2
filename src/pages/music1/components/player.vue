@@ -3,31 +3,29 @@
 */
 <template>
 	<div class = "left_content">
-		
 		<div class = "title">
 			<h1>{{ FLTcurrentTrackInfo.name }}</h1>
 			<p>{{ FLTcurrentTrackInfo.artists | comboName }}</p>
 		</div>
 		<div class = "cover">
-			<div class = "wrapper" :style="{ transform:'rotate('+ rotateDeg+'deg)'}">
+			<div class = "wrapper" :style = "{ transform:'rotate('+ rotateDeg+'deg)'}">
 				<div class = "cd"></div>
 				<img :src = "FLTcurrentTrackInfo.picurl" :alt = "FLTcurrentTrackInfo.name">
 			</div>
 		</div>
 		
 		<div class = "lrc">
-			<div class = "inner">
-				<p>txt</p>
-				<p>txt</p>
-				<p>txt</p>
+			<div class = "inner" :style = "{transform:'translate3d(0px,'+lrcOffset_c+'px,0px)'}">
+				<p v-for = "(lrc,index) in lrcs" :key = "'lrc-'+index" :id = "'line-'+index">{{ lrc.txt}}</p>
 			</div>
 		</div>
+		
 		<div class = "sound">
 			<div class = "mute">
 				<span class = "fa fa-volume-up fa-2x"></span>
 			</div>
 			<div class = "slider">
-				<input type = "range" max = "1" v-model="volume_c" step="0.01">
+				<input type = "range" max = "1" v-model = "volume_c" step = "0.01">
 			</div>
 			<div class = "download">
 				<a href = "#" class = "fa fa-download fa-2x"></a>
@@ -58,7 +56,7 @@
 			</li>
 		</ul>
 		
-		<div class = "stick" :class="{ playing:!FLTplaying}"></div>
+		<div class = "stick" :class = "{ playing:!FLTplaying}"></div>
 		<div class = "mask">
 			<div class = "cover-mask"></div>
 			<div class = "album-cover" :style = "{'background-image':'url('+FLTcurrentTrackInfo.picurl+')'}"></div>
@@ -124,8 +122,8 @@
 				margin: 2rem auto;
 				padding: .8rem .9rem;
 				border-radius: 50%;
-				
 				background-color: rgba(107, 107, 107, 0.3);
+				
 				.cd {
 					position: absolute;
 					top: 0;
@@ -148,18 +146,26 @@
 		
 		.lrc {
 			position: absolute;
-			bottom: 30%;
+			bottom: 24%;
 			left: 0;
 			z-index: 10;
 			
 			width: 100%;
+			height: 117px;
 			margin: 0;
 			padding: 0;
+			border:0;
+			overflow: hidden;
+			
 			.inner {
 				text-align: center;
+				overflow: hidden;
+				transition: -webkit-transform 0.3s ease-out;
+				transform-origin: 0 0 0;
 				p {
-					margin: 5px 0;
-					padding: 5px 0;
+					height: 19px;
+					padding: 10px 0;
+					margin: 0;
 					font-size: 1.6rem;
 					line-height: 1.6rem;
 					font-weight: 600;
@@ -169,7 +175,7 @@
 		}
 		.sound {
 			position: absolute;
-			bottom: 25%;
+			bottom: 22%;
 			left: 0;
 			z-index: 10;
 			
@@ -455,7 +461,13 @@
 		name      : 'player',
 		data () {
 			return {
-				rotateDeg:0
+				rotateDeg: 0,
+				lrcIndex : 0,
+				lrcs     : [
+					{
+						txt: '歌词加载中......'
+					}
+				]
 			}
 		},
 		props     : [],
@@ -487,11 +499,18 @@
 		},
 		destroyed(){},
 		watch     : {
-			FLTplaying(nval,oval){
-				if(nval){
+			FLTplaying(nval, oval){
+				if (nval) {
 					this.timer = this.rotateTimer_m();
-				}else{
+				} else {
 					clearInterval(this.timer)
+				}
+			},
+			FLTlrc(nval,oval){
+				console.log(`nval:`, nval)
+				if (nval) {
+					this.lrcs = nval;
+					this.loadLrc_m()
 				}
 			}
 		},
@@ -504,7 +523,9 @@
 				type.FLT.currentPos,
 				type.FLT.currentTime,
 				type.FLT.durationTime,
-				type.FLT.volume
+				type.FLT.volume,
+				type.FLT.nolyric,
+				type.FLT.lrc,
 			]),
 			audioSrc_c(){
 				return this[type.FLT.audioSrc];
@@ -516,20 +537,33 @@
 				set: function(val) {
 					// todo:直接通过这种方式实现拖动进度条，之前的太复杂
 					this[type.CHG.currentPos](val)
-				    let audio = document.querySelector('#audioPlay');
-				    audio.currentTime = val;
+					let audio = document.querySelector('#audioPlay');
+					audio.currentTime = val;
 				}
 			},
-		    volume_c:{
-				get:function() {
+			volume_c : {
+				get: function() {
 					return this[type.FLT.volume];
 				},
-		        set:function(val){
+				set: function(val) {
 					this[type.CHG.volume](val)
-		            let audio = document.querySelector('#audioPlay');
-					 audio.volume = val;
-		        }
-		    }
+					let audio = document.querySelector('#audioPlay');
+					audio.volume = val;
+				}
+			},
+		    // 计算歌词偏移位置
+			lrcOffset_c(){
+				if (this.lrcs) {
+					console.log(`计算歌词偏移位置`)
+					// 1、根据时间获得歌词
+					var current = Math.round(this[type.FLT.currentPos])
+					// 2、根据时间得到歌词
+					for (var i = 0; i < this.lrcs.length; i++) {
+						if (this.lrcs[i].time === current) this.lrcIndex = i
+					}
+					return - (this.lrcIndex - 1 ) * 39
+				}
+			}
 			
 		},
 		methods   : {
@@ -539,12 +573,18 @@
 				type.CHG.currentPos,
 				type.CHG.durationTime,
 				type.CHG.volume,
+				type.CHG.nolyric,
+				type.CHG.lrc,
+			]),
+			...mapActions([
+				type.UPD.searchLrc
 			]),
 			// HTML5 Audio/Video 事件
 			// 当浏览器可以播放音频/视频时
 			// http://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp
 			canPlay_m(){
 				this[type.CHG.playing](true)
+			    this[type.UPD.searchLrc]()
 				document.getElementById('audioPlay').play()
 			},
 			
@@ -595,11 +635,53 @@
 						this.rotateDeg = 0
 					}
 				}, 50)
+			},
+			loadLrc_m(){
+				if (this[type.FLT.nolyric]) {
+					this.lrcs = [
+						{
+							txt: '歌词未收录或者无！'
+						}
+					]
+				} else {
+					let initLrc = this[type.FLT.lrc];
+					console.log(`得到本地歌词列表:`, )
+					let lrcs = initLrc.split('\n');
+					// console.log(`lrcs:`, lrcs)
+					let lrcsL = lrcs.length;
+			/*
+			 * lrcs=["[00:00.00] 作曲 : 金志文","[00:00.433] 作词 : 王耀光",""]
+			 * */
+					let lrcAr = [];
+					let timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
+					for (var i = 0; i < lrcsL; i++) {
+						// 提取时间
+						var timeRegExpArr = lrcs[i].match(timeReg);
+						// console.log(`timeRegExpArr:`, timeRegExpArr)
+						if (!timeRegExpArr) {continue}
+						// 提取歌词
+						var txt = lrcs[i].replace(timeReg, '').trim();
+						// console.log(`txt:`, txt)
+						// 处理时间
+						for (var k = 0; k < timeRegExpArr.length; k++) {
+							var obj = {}
+							var t = timeRegExpArr[k]
+							var min = Number(String(t.match(/\[\d*/i)).slice(1))
+							var sec = Number(String(t.match(/\:\d*/i)).slice(1))
+							// 转换成秒数
+							var time = min * 60 + sec
+							obj.time = time
+							obj.txt = txt
+							lrcAr.push(obj)
+						}
+					}
+					this.lrcs = lrcAr
+				}
 			}
 		},
 		filters   : {
 			comboName: function(val) {
-				if (!val) return ''
+				if (!val) return ""
 				let str = "";
 				val.forEach((v, i) => {
 					str += v.name + " / "

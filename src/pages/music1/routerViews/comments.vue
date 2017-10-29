@@ -12,7 +12,7 @@
 					<p>{{ hotcomment.content }}</p>
 					<p>{{ hotcomment.time | date}}</p>
 				</div>
-				<p><span class="fa fa-heart animation-style-5"></span> {{ hotcomment.likedCount }}</p>
+				<p><span class="fa fa-heart animation-style-5"></span>{{ hotcomment.likedCount }}</p>
 			</li>
 			
 			<li v-for = "( comment,index ) in FLTcomments" :key = "'comment' + index">

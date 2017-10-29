@@ -5,4 +5,6 @@ export default {
 	audioSrc:'?type=song',
 	// 根据歌曲id查找歌曲评论
 	searchComments:'?type=comments',
+	// 根据歌曲id查找歌曲歌词
+	searchLrc:'?type=lyric',
 }
