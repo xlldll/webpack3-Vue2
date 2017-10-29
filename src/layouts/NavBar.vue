@@ -83,6 +83,10 @@
 							<a href = "/pages/music1/app.html">音乐1<span class = "sr-only">(current)</span>
 							</a>
 						</li>
+						<li>
+							<a href = "/pages/qqmusic/app.html">QQ音乐<span class = "sr-only">(current)</span>
+							</a>
+						</li>
 					</ul>
 				</li>
 				<li class = "dropdown">

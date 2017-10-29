@@ -3,10 +3,12 @@
 */
 <template>
 	<div class = "left_content">
+		
 		<div class = "title">
 			<h1>{{ FLTcurrentTrackInfo.name }}</h1>
 			<p>{{ FLTcurrentTrackInfo.artists | comboName }}</p>
 		</div>
+		
 		<div class = "cover">
 			<div class = "wrapper" :style = "{ transform:'rotate('+ rotateDeg+'deg)'}">
 				<div class = "cd"></div>
